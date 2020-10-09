@@ -51,7 +51,7 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
             <?php
             $sql = "";
             if (isset($_GET["category"])) {
-                $sql = "SELECT * FROM `weeds` WHERE Growth_form = '" . $_GET["category"] . "'";
+                $sql = "SELECT * FROM `weeds` WHERE Growth_form = '" . $_GET["category"] . "' ORDER BY Name ASC";
             }
             ?>
             <div class="page-select">
