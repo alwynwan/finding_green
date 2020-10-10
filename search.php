@@ -33,7 +33,7 @@ $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
                 <label for="flower_colour">Flower Colour</label>
                 <input id="flower_colour" type="text" name="flower_colour">
 
-                <div class="row space-between">
+                <div class="row space-between full-width">
                     <button type="reset" class="filter-btn">Clear</button>
                     <button type="submit" class="filter-btn">Apply</button>
                 </div>

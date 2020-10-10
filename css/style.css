@@ -61,7 +61,6 @@ body {
 }
 
 .row {
-    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -69,7 +68,6 @@ body {
 }
 
 .col {
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -472,7 +470,6 @@ body {
 .result {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     background-color: var(--white);
     padding: 1em;
@@ -567,6 +564,15 @@ body {
     color: white;
     font-weight: bold;
     cursor: pointer;
+}
+
+.read-more {
+    background: var(--yellow);
+    color: var(--text);
+    padding: 1em;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 

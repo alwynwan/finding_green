@@ -1,5 +1,5 @@
 <nav class="navbar full-width">
-        <div class="row space-between">
+        <div class="row space-between full-width">
             <div class="left" onclick="home()">
                 <img class="logo" src="img/icon-small.png">
                 <h1 class="title">Finding Green</h1>
