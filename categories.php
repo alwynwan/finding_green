@@ -101,7 +101,11 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
                     echo ($full_str);
                 }
                 ?>
+                <div class="page-select">
+                    <?php draw_page_buttons($cur_page, $sql); ?>
+                </div>
             </div>
+
         </div>
     </div>
     <?php include("theme_swapper.php"); ?>

@@ -87,31 +87,31 @@ $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
                 $regex = "/([0-9a-z]+)\?itok/";
                 $sql = "";
                 // Check if any filters are populated
-                if($get_keywords != "" || $get_growth_form != "") {
+                if ($get_keywords != "" || $get_growth_form != "") {
                     // Start SQL query
                     $sql = "SELECT * FROM weeds where ";
                     // Check if keywords is populated
-                    if($get_keywords != "") {
+                    if ($get_keywords != "") {
                         // Add to query
-                        $sql= $sql . "Name like '%".$get_keywords."%' or Common_names like '%".$get_keywords."%' ";
+                        $sql = $sql . "Name like '%" . $get_keywords . "%' or Common_names like '%" . $get_keywords . "%' ";
                     }
                     // Check if growth form is populated
-                    if($get_growth_form != "") {
+                    if ($get_growth_form != "") {
                         // Check if keywords is populated
-                        if($get_keywords != ""){
+                        if ($get_keywords != "") {
                             // Merge the two conditions
                             $sql = $sql . "and ";
                         }
                         // Add to query
-                        $sql = $sql . "Growth_form LIKE '%".$get_growth_form ."%' ";
+                        $sql = $sql . "Growth_form LIKE '%" . $get_growth_form . "%' ";
                     }
 
                     $sql = $sql . "ORDER BY Name ASC";
                 }
-                
-                echo($sql);
+
+                echo ($sql);
                 $page_data = get_items(10 * ($cur_page - 1), 10 * ($cur_page - 1) + 9, $sql);
-                
+
                 foreach ($page_data as $entry => $value) {
                     $img_url = null;
                     $plant_name = str_replace("&#039;", "", str_replace(" ", "_", strtolower($value["1"])));
@@ -150,6 +150,9 @@ $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
                     echo ($full_str);
                 }
                 ?>
+                <div class="page-select">
+                    <?php draw_page_buttons($cur_page); ?>
+                </div>
             </div>
         </div>
     </div>
