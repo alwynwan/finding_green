@@ -12,7 +12,7 @@ $(".discover-submit").click(() => {
             $(".info-msg").text("These are your favourite plants");
             $(".discover-submit").text("Restart");
             $(".plant-images").empty();
-            $(".plant-images").append(`<div class="row full-width"><div class="col">
+            $(".plant-images").append(`<div class="row mobile-col tablet-col full-width"><div class="col">
             <div class="plant-entry">
                 <img src="img/aerial_yam/1.jpg">
             </div>
@@ -22,7 +22,7 @@ $(".discover-submit").click(() => {
             <div class="plant-entry">
                 <img src="img/yellow_bells/1.jpg">
             </div>
-            <a class="read-more" href="#">Read more</a>
+            <a class="read-more" href="detail.php?id=73">Read more</a>
         </div>
         <div class="col">
             <div class="plant-entry">

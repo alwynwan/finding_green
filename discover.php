@@ -3,11 +3,11 @@
 <body class="full-height full-width">
     <?php include('navbar.php') ?>
 
-    <div class="content full-height full-width">
+    <div class="container full-height full-width">
         <div class="discover-container full-width full-height scrollable">
             <span class="info-msg">Find your new favourite by clicking your preferable images below!</span>
             <div class="plant-images full-width">
-                <div class="row full-width">
+                <div class="row mobile-col tablet-col full-width">
                     <div class="col">
                         <div class="plant-entry">
                             <img src="img/aerial_yam/2.jpg">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row full-width">
+                <div class="row mobile-col tablet-col full-width">
                     <div class="col">
                         <div class="plant-entry">
                             <img src="img/annual_ragweed/2.jpg">
@@ -64,9 +64,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row full-width">
-                    <button class="discover-submit" type="submit">Submit</button>
-                </div>
+
+            <div class="row full-width bottom-item">
+                <button class="discover-submit" type="submit">Submit</button>
+            </div>
+
             <?php include("theme_swapper.php"); ?>
             <script src="js/jquery-3.5.1.min.js"></script>
             <script src="js/app.js"></script>

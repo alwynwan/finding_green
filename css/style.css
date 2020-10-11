@@ -53,11 +53,23 @@ body {
 }
 
 .scrollable {
-    overflow-y: scroll;
+    overflow: auto;
+}
+
+.bottom-item {
+    padding-bottom: 5em;
 }
 
 .space-between {
     justify-content: space-between !important;
+}
+
+.justify-flex-start {
+    justify-content: flex-start !important;
+}
+
+.align-flex-start {
+    align-items: flex-start !important;
 }
 
 .row {
@@ -197,6 +209,9 @@ body {
 /* Search page */
 
 .navbar {
+    position: absolute;
+    top: 0;
+    z-index: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -328,6 +343,7 @@ body {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-top: 87px;
 }
 
 .mobile-sidebar {
@@ -386,6 +402,11 @@ body {
     width: 100px;
     padding: 0.2em;
     margin-top: 1em;
+}
+
+.weed_name,
+.weed_desc {
+    color: var(--black);
 }
 
 .categories ul {
@@ -576,6 +597,127 @@ body {
 }
 
 
+/* Discover plant details page */
+
+.back-button {
+    font-size: x-large;
+    font-weight: bolder;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+}
+
+.back-button span {
+    margin-right: 0.5em;
+    color: white;
+}
+
+.plant-details {
+    justify-content: flex-start;
+    margin: 2em 0em 0em 5em;
+}
+
+.detail-left {
+    align-items: flex-start;
+    width: 250px;
+    margin-right: 2em;
+    justify-content: flex-start;
+}
+
+.plant-name {
+    font-size: 1.6em;
+    color: var(--text);
+}
+
+.plant-species {
+    font-size: 1em;
+    color: var(--text);
+    font-style: oblique;
+    margin-bottom: 0.5em;
+}
+
+.main-img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin-bottom: 0.5em;
+    border-radius: 5px;
+}
+
+.sub-imgs {
+    width: 250px;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 0.5em;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.purchase-btn {
+    color: var(--text);
+    padding: 1em 0em;
+    text-decoration: none;
+    text-align: center;
+    background-color: var(--yellow);
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.detail-right {
+    width: 50%;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.detail-right * {
+    color: var(--text);
+}
+
+.emphasis-bubbles {
+    margin-top: 0.5em;
+}
+
+.bubble {
+    background-color: var(--leaf-green);
+    font-weight: bold;
+    padding: 0.2em 1em;
+    border-radius: 5px;
+    font-style: italic;
+    min-width: 70px;
+    text-align: center;
+    margin-right: 1em;
+}
+
+.bubble span {
+    color: var(--text);
+}
+
+.plant_desc {
+    margin: 1em 0em;
+}
+
+.detail_cell {
+    margin: 1em 2em 3em 0em;
+}
+
+.cell_subheading {
+    text-transform: uppercase;
+    font-size: 1.2em;
+}
+
+.cell_content {}
+
+
 /* Tablet overrides */
 
 @media only screen and (max-width: 1024px) {
@@ -588,6 +730,12 @@ body {
     }
     .result img {
         height: 120px;
+    }
+    .discover-container {
+        flex-direction: column;
+    }
+    .row.tablet-col {
+        flex-wrap: wrap;
     }
 }
 
@@ -651,6 +799,7 @@ body {
         justify-content: space-evenly;
     }
     .container {
+        margin-top: 82px;
         flex-direction: column;
     }
     .sidebar {
@@ -692,5 +841,11 @@ body {
     }
     .weed_name {
         font-size: 1.2em;
+    }
+    .row.mobile-col {
+        flex-wrap: wrap;
+    }
+    .discover-container {
+        flex-direction: column;
     }
 }
