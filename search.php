@@ -6,6 +6,13 @@ load_data();
 $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
 $get_keywords = isset($_GET['keywords']) ? $_GET['keywords'] : "";
 $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
+
+$get_leaf_arrangement = isset($_GET['leaf_arrangement']) ? $_GET['leaf_arrangement'] : "";
+$get_leaf_form = isset($_GET['leaf_form']) ? $_GET['leaf_form'] : "";
+$get_foliage_colour = isset($_GET['foliage_colour']) ? $_GET['foliage_colour'] : "";
+$get_flower_colour = isset($_GET['flower_colour']) ? $_GET['flower_colour'] : "";
+
+
 ?>
 
 <body class="full-height full-width">
@@ -33,7 +40,7 @@ $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
                 <label for="flower_colour">Flower Colour</label>
                 <input id="flower_colour" type="text" name="flower_colour">
 
-                <div class="row space-between full-width">
+                <div class="row space-between">
                     <button type="reset" class="filter-btn">Clear</button>
                     <button type="submit" class="filter-btn">Apply</button>
                 </div>
@@ -87,31 +94,86 @@ $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
                 $regex = "/([0-9a-z]+)\?itok/";
                 $sql = "";
                 // Check if any filters are populated
-                if ($get_keywords != "" || $get_growth_form != "") {
+                if($get_keywords != "" || $get_growth_form != ""||$get_leaf_arrangement != "" || $get_leaf_form != ""|| $get_foliage_colour != ""||$get_flower_colour != "" ) {
                     // Start SQL query
                     $sql = "SELECT * FROM weeds where ";
                     // Check if keywords is populated
-                    if ($get_keywords != "") {
+                    if($get_keywords != "") {
                         // Add to query
-                        $sql = $sql . "Name like '%" . $get_keywords . "%' or Common_names like '%" . $get_keywords . "%' ";
+                        $sql= $sql . "Name like '%".$get_keywords."%' or Common_names like '%".$get_keywords."%' ";
                     }
                     // Check if growth form is populated
-                    if ($get_growth_form != "") {
+                    if($get_growth_form != "") {
                         // Check if keywords is populated
-                        if ($get_keywords != "") {
+                        if($get_keywords != ""){
                             // Merge the two conditions
                             $sql = $sql . "and ";
                         }
                         // Add to query
-                        $sql = $sql . "Growth_form LIKE '%" . $get_growth_form . "%' ";
+                        $sql = $sql . "Growth_form LIKE '%".$get_growth_form."%' ";
                     }
+                    // Check if leaf arrangement is populated
+                    if($get_leaf_arrangement !=""){
+                        if($get_keywords != ""){
+                            // Merge the two conditions
+                            $sql = $sql . "and ";
+                        }
+                        if($get_growth_form != ""){
+                            // Merge the two conditions
+                            $sql = $sql . "and ";
+                        }
+                        $sql = $sql . "Leaf_arrangement LIKE '%".$get_leaf_arrangement."%' ";
+                    }
+                    if($get_leaf_form !=""){
+                        if($get_keywords != ""){
+                            // Merge the two conditions
+                            $sql = $sql . "and ";
+                        }
+                        if($get_growth_form != ""){
+                            // Merge the two conditions
+                            $sql = $sql . "and ";
+                        }
+                        if($get_leaf_arrangement != ""){
+                            // Merge the two conditions
+                            $sql = $sql . "and ";
+                        }
+                        $sql = $sql . "Leaf form LIKE '%".$get_leaf_form ."%' ";
+                    }
+                    // Check if foliage colour is populated
+                    if($get_foliage_colour !=""){
+                        if($get_keywords != ""){                       
+                            $sql = $sql . "and ";
+                        }
+                        if($get_growth_form != ""){
+                            $sql = $sql . "and ";
+                        }
+                        $sql = $sql . "Foliage_Colour LIKE '%".$get_foliage_colour."%' ";
+                    }
+                    // Check if flower colour is populated
+                    if($get_flower_colour !=""){
+                        if($get_keywords != ""){
+                            $sql = $sql . "and ";
+                        }
+                        if($get_growth_form != ""){
+                            // Merge the two conditions
+                            $sql = $sql . "and ";
+                        }
+                        if($get_foliage_colour != ""){
+                            // Merge the two conditions
+                            $sql = $sql . "and ";
+                        }
+                        $sql = $sql . "Flower_Colour LIKE '%".$get_flower_colour."%' ";
+                    }
+
+
+
 
                     $sql = $sql . "ORDER BY Name ASC";
                 }
-
-                echo ($sql);
+                
+                echo($sql);
                 $page_data = get_items(10 * ($cur_page - 1), 10 * ($cur_page - 1) + 9, $sql);
-
+                
                 foreach ($page_data as $entry => $value) {
                     $img_url = null;
                     $plant_name = str_replace("&#039;", "", str_replace(" ", "_", strtolower($value["1"])));
@@ -150,9 +212,6 @@ $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
                     echo ($full_str);
                 }
                 ?>
-                <div class="page-select">
-                    <?php draw_page_buttons($cur_page); ?>
-                </div>
             </div>
         </div>
     </div>
