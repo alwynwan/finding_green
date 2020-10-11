@@ -33,13 +33,13 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
 
                 <div class="categories sidebar-hidden">
                     <ul>
-                        <li>Aquatic</li>
-                        <li>Grass</li>
-                        <li>Herb</li>
-                        <li>Shrub</li>
-                        <li>Succulent</li>
-                        <li>Tree</li>
-                        <li>Vine</li>
+                    <li onclick="change_category('Aquatic')">Aquatic</li>
+                    <li onclick="change_category('Grass')">Grass</li>
+                    <li onclick="change_category('Herb')">Herb</li>
+                    <li onclick="change_category('Shrub')">Shrub</li>
+                    <li onclick="change_category('Succulent')">Succulent</li>
+                    <li onclick="change_category('Tree')">Tree</li>
+                    <li onclick="change_category('Vine')">Vine</li>
                     </ul>
                 </div>
             </div>
@@ -94,7 +94,8 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
 
                     $imgs = glob("img/" . $plant_name . "/*");
 
-                    $name_str = str_replace("{{weedname}}", ucwords($value[1]), $result_template);
+                    $id_str = str_replace("{{weedid}}", intval($value[0]), $result_template);
+                    $name_str = str_replace("{{weedname}}", ucwords($value[1]), $id_str);
                     $species_name_str = str_replace("{{weeddesc}}", ucwords($value[6]), $name_str);
                     $full_str = str_replace("{{weedimg}}", $imgs[0], $species_name_str);
 

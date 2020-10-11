@@ -72,3 +72,13 @@ $(document).ready(() => {
     var theme_selector_btn = $(".theme-swapper");
     theme_selector_btn.addClass(localStorage["theme"]);
 });
+
+$(".back-button").click(() => {
+    window.history.go(-1);
+});
+
+$(".result").click((event) => {
+    if (event.currentTarget.dataset["id"] != null) {
+        window.location.href = `detail.php?id=${event.currentTarget.dataset["id"]}`;
+    }
+});

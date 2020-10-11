@@ -66,7 +66,7 @@ $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
                     <label for="flower_colour">Flower Colour</label>
                     <input id="flower_colour" type="text" name="flower_colour">
 
-                    <div class="row">
+                    <div class="row full-width space-between">
                         <button type="reset" class="filter-btn">Clear</button>
                         <button type="submit" class="filter-btn">Apply</button>
                     </div>
@@ -143,7 +143,8 @@ $get_growth_form = isset($_GET['growth_form']) ? $_GET['growth_form'] : "";
 
                     $imgs = glob("img/" . $plant_name . "/*");
 
-                    $name_str = str_replace("{{weedname}}", ucwords($value[1]), $result_template);
+                    $id_str = str_replace("{{weedid}}", intval($value[0]), $result_template);
+                    $name_str = str_replace("{{weedname}}", ucwords($value[1]), $id_str);
                     $species_name_str = str_replace("{{weeddesc}}", ucwords($value[6]), $name_str);
                     $full_str = str_replace("{{weedimg}}", $imgs[0], $species_name_str);
 

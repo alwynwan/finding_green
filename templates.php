@@ -1,6 +1,6 @@
 <?php 
 $result_template = <<<abcdedf
-<div class="result">
+<div class="result" data-id={{weedid}}>
 <img src={{weedimg}}>
 <div class="col">
     <h2 class="weed_name">{{weedname}}</h2>
