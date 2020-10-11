@@ -82,61 +82,65 @@ $get_flower_colour = isset($_GET['flower_colour']) ? $_GET['growth_form'] : "";
         <div class="right-content full-height full-width scrollable">
             <h1>Results</h1>
 
+            <?php
+            $sql = "";
+            // Check if any filters are populated
+            if ($get_keywords != "" || $get_growth_form != "" || $get_leaf_arrangement != "" || $get_family != "" || $get_foliage_colour != "" || $get_flower_colour != "") {
+                $sql = "SELECT * FROM weeds where ";
+
+                if ($get_keywords != "") {
+                    $sql = $sql . "Name like '%" . $get_keywords . "%' or Common_names like '%" . $get_keywords . "%' ";
+                }
+
+                if ($get_growth_form != "") {
+                    if ($get_keywords != "") {
+                        $sql = $sql . "and ";
+                    }
+                    $sql = $sql . "Growth_form LIKE '%" . $get_growth_form . "%' ";
+                }
+
+                if ($get_leaf_arrangement != "") {
+                    if ($get_keywords != "" || $get_growth_form != "") {
+                        $sql = $sql . "and ";
+                    }
+                    $sql = $sql . "Leaf_arrangement LIKE '%" . $get_leaf_arrangement . "%' ";
+                }
+
+                if ($get_family != "") {
+                    if ($get_keywords != "" || $get_growth_form != "" || $get_leaf_arrangement != "") {
+                        $sql = $sql . "and ";
+                    }
+                    $sql = $sql . "Family LIKE '%" . $get_family . "%' ";
+                }
+
+                if ($get_foliage_colour != "") {
+                    if ($get_keywords != "" || $get_growth_form != "" || $get_leaf_arrangement != "" || $get_family != "") {
+                        $sql = $sql . "and ";
+                    }
+                    $sql = $sql . "Foliage_Colour LIKE '%" . $get_foliage_colour . "%' ";
+                }
+
+                if ($get_flower_colour != "") {
+                    if ($get_keywords != "" || $get_growth_form != "" || $get_leaf_arrangement != "" || $get_family != "" || $get_foliage_colour) {
+                        $sql = $sql . "and ";
+                    }
+                    $sql = $sql . "Flower_colour LIKE '%" . $get_flower_colour . "%' ";
+                }
+
+                $sql = $sql . "ORDER BY Name ASC";
+            }
+
+            ?>
+
             <div class="page-select">
-                <?php draw_page_buttons($cur_page); ?>
+                <?php draw_page_buttons($cur_page, $sql); ?>
             </div>
 
             <div class="results">
                 <?php
                 $regex = "/([0-9a-z]+)\?itok/";
-                $sql = "";
-                // Check if any filters are populated
-                if ($get_keywords != "" || $get_growth_form != "" || $get_leaf_arrangement != "" || $get_family != "" || $get_foliage_colour != "" || $get_flower_colour != "") {
-                    $sql = "SELECT * FROM weeds where ";
 
-                    if ($get_keywords != "") {
-                        $sql = $sql . "Name like '%" . $get_keywords . "%' or Common_names like '%" . $get_keywords . "%' ";
-                    }
-
-                    if ($get_growth_form != "") {
-                        if ($get_keywords != "") {
-                            $sql = $sql . "and ";
-                        }
-                        $sql = $sql . "Growth_form LIKE '%" . $get_growth_form . "%' ";
-                    }
-
-                    if($get_leaf_arrangement != "") {
-                        if($get_keywords != "" || $get_growth_form != "") {
-                            $sql = $sql . "and ";
-                        }
-                        $sql = $sql . "Leaf_arrangement LIKE '%" . $get_leaf_arrangement . "%' ";
-                    }
-
-                    if($get_family != "") {
-                        if($get_keywords != "" || $get_growth_form != "" || $get_leaf_arrangement != "") {
-                            $sql = $sql . "and ";
-                        }
-                        $sql = $sql . "Family LIKE '%" . $get_family . "%' ";
-                    }
-
-                    if($get_foliage_colour != "") {
-                        if($get_keywords != "" || $get_growth_form != "" || $get_leaf_arrangement != "" || $get_family != "") {
-                            $sql = $sql . "and ";
-                        }
-                        $sql = $sql . "Foliage_Colour LIKE '%" . $get_foliage_colour . "%' ";
-                    }
-
-                    if($get_flower_colour != "") {
-                        if($get_keywords != "" || $get_growth_form != "" || $get_leaf_arrangement != "" || $get_family != "" || $get_foliage_colour) {
-                            $sql = $sql . "and ";
-                        }
-                        $sql = $sql . "Flower_colour LIKE '%" . $get_flower_colour . "%' ";
-                    }
-
-                    $sql = $sql . "ORDER BY Name ASC";
-                }
-
-                $page_data = get_items(10 * ($cur_page - 1), 10 * ($cur_page - 1) + 9, $sql);
+                $page_data = get_items(10 * ($cur_page - 1), 10, $sql);
 
                 foreach ($page_data as $entry => $value) {
                     $img_url = null;
@@ -178,7 +182,7 @@ $get_flower_colour = isset($_GET['flower_colour']) ? $_GET['growth_form'] : "";
                 }
                 ?>
                 <div class="page-select">
-                    <?php draw_page_buttons($cur_page); ?>
+                    <?php draw_page_buttons($cur_page, $sql); ?>
                 </div>
             </div>
         </div>

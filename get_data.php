@@ -99,7 +99,7 @@ function insert_to_db($new_data)
 }
 
 // Returns items from dataset from $start to $end, both inclusive
-function get_items($start, $end, $sql = "")
+function get_items($start, $num, $sql = "")
 {
     if($sql == ""){
         $data = get_data();
@@ -107,7 +107,7 @@ function get_items($start, $end, $sql = "")
     else {
         $data = get_data($sql);
     }
-    return array_slice($data, $start, $end - $start, true);
+    return array_slice($data, $start, $num, true);
 }
 
 function draw_page_buttons($cur_page, $sql = "")

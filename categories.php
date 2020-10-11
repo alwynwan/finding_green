@@ -51,7 +51,7 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
             <?php
             $sql = "";
             if (isset($_GET["category"])) {
-                $sql = "SELECT * FROM `weeds` WHERE Growth_form = '" . $_GET["category"] . "' ORDER BY Name ASC";
+                $sql = "SELECT * FROM `weeds` WHERE Growth_form LIKE '%" . $_GET["category"] . "%' ORDER BY Name ASC";
             }
             ?>
             <div class="page-select">
@@ -62,7 +62,7 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
                 <?php
                 $regex = "/([0-9a-z]+)\?itok/";
 
-                $page_data = get_items(10 * ($cur_page - 1), 10 * ($cur_page - 1) + 9, $sql);
+                $page_data = get_items(10 * ($cur_page - 1), 10, $sql);
                 foreach ($page_data as $entry => $value) {
                     $img_url = null;
                     $plant_name = str_replace("&#039;", "", str_replace(" ", "_", strtolower($value["1"])));
