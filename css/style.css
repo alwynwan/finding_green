@@ -802,6 +802,9 @@ body {
         margin-top: 82px;
         flex-direction: column;
     }
+    .container.opened {
+        margin-top: 137px;
+    }
     .sidebar {
         display: none;
     }

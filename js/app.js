@@ -11,12 +11,14 @@ function toggle_sidebar() {
 function toggle_menu() {
     var menu = $(".mobile-menu span");
     menu.toggleClass("opened");
-    if (menu.hasClass("opened"))
+    if (menu.hasClass("opened")) {
         menu.text("close");
-    else
+    } else {
         menu.text("menu");
+    }
 
     $(".mobile-navbar-links").toggleClass("opened");
+    $(".container").toggleClass("opened");
 }
 
 function next_page(cur_page) {
