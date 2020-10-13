@@ -97,7 +97,9 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
                     $id_str = str_replace("{{weedid}}", intval($value[0]), $result_template);
                     $name_str = str_replace("{{weedname}}", ucwords($value[1]), $id_str);
                     $species_name_str = str_replace("{{weeddesc}}", ucwords($value[6]), $name_str);
-                    $full_str = str_replace("{{weedimg}}", $imgs[0], $species_name_str);
+                    $img_str = str_replace("{{weedimg}}", $imgs[0], $species_name_str);
+                    $common_names_str = str_replace("{{common_names}}", ucwords($value[5]), $img_str);
+                    $full_str = str_replace("{{control_methods}}", $value[15] == "" ? "N/A" : ucfirst($value[15]),$common_names_str);
 
                     echo ($full_str);
                 }
