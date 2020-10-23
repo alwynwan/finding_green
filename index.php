@@ -1,5 +1,5 @@
 <?php
-include('header.php');
+include_once('header.php');
 ?>
 
 <body class="full-height full-width">
@@ -24,7 +24,7 @@ include('header.php');
         </div>
     </div>
 
-    <?php include("theme_swapper.php"); ?>
+    <?php include_once("theme_swapper.php"); ?>
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/home.js"></script>
     <script src="js/app.js"></script>

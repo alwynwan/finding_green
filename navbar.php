@@ -12,7 +12,7 @@
             <div class="right">
                 <div class="row space-between">
                     <ul class="navbar-links">
-                        <?php include('pages.php') ?>
+                        <?php include_once('pages.php') ?>
                     </ul>
 
                     <ul class="mobile-menu">
@@ -24,7 +24,7 @@
 
         <div class="row mobile-menu">
             <ul class="mobile-navbar-links">
-                <?php include('pages.php') ?>
+                <?php include_once('pages.php') ?>
             </ul>
         </div>
     </nav>

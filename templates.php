@@ -29,4 +29,21 @@ $active_page_indicator_template = <<<a
     <a>{{pagenum}}</a>
 </div>
 a;
+
+$discover_plant_entry_template_stage1 = <<<a
+<div class="col">
+<div class="plant-entry" data-id={{weedid}}>
+    <img src="{{plant_img}}">
+</div>
+</div>
+a;
+
+$discover_plant_entry_template_stage2 = <<<a
+<div class="col">
+    <div class="plant-entry" data-id={{weedid}}>
+        <img src="{{plant_img}}">
+    </div>
+    <a class="read-more" href="detail.php?id={{weedid}}">Read more</a>
+</div>
+a;
 ?>

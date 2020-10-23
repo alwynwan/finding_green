@@ -23,7 +23,7 @@ function toggle_menu() {
 
 function next_page(cur_page) {
     const regex = /page=(\d+)/;
-    console.log(window.location.search);
+
     if (!regex.test(window.location.search)) {
         console.log("No page found.");
 

@@ -1,5 +1,11 @@
-<?php include('header.php');
-include('get_data.php');
+<?php
+// Turn off output buffering
+ini_set('output_buffering', 'off');
+
+
+header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
+include_once('header.php');
+include_once('get_data.php');
 include_once('templates.php');
 load_data();
 
@@ -13,7 +19,7 @@ $get_flower_colour = isset($_GET['flower_colour']) ? $_GET['growth_form'] : "";
 ?>
 
 <body class="full-height full-width">
-    <?php include('navbar.php') ?>
+    <?php include_once('navbar.php') ?>
 
     <div class="container">
         <div class="sidebar">
@@ -144,16 +150,27 @@ $get_flower_colour = isset($_GET['flower_colour']) ? $_GET['growth_form'] : "";
                     $plant_name = str_replace("&#039;", "", $value["1"]);
                     get_images($plant_name);
                     $plant_name = str_replace(" ", "_", $plant_name);
-                    $imgs = glob("img/" . $plant_name . "/*.{jpg,png,gif}",GLOB_BRACE);
+                    $imgs = glob("img/" . $plant_name . "/*.{jpg,png,gif}", GLOB_BRACE);
 
-                    $id_str = str_replace("{{weedid}}", intval($value[0]), $result_template);
-                    $name_str = str_replace("{{weedname}}", ucwords($value[1]), $id_str);
-                    $species_name_str = str_replace("{{weeddesc}}", ucwords($value[6]), $name_str);
-                    $img_str = str_replace("{{weedimg}}", $imgs[0], $species_name_str);
-                    $common_names_str = str_replace("{{common_names}}", ucwords($value[5]), $img_str);
-                    $full_str = str_replace("{{control_methods}}", $value[15] == " " ? "N/A" : ucfirst($value[15]),$common_names_str);
+                    $full_str = str_replace(
+                        array(
+                            "{{weedid}}", 
+                            "{{weedname}}", 
+                            "{{weeddesc}}", 
+                            "{{weedimg}}", 
+                            "{{common_names}}",
+                            "{{control_methods}}"),
+                        array(
+                            intval($value[0]), 
+                            ucwords($value[1]), 
+                            ucwords($value[6]),
+                            $imgs[0], 
+                            ucwords($value[5]), 
+                            $value[15] == " " ? "N/A" : ucfirst($value[15])), $result_template);
 
-                    echo($full_str);
+                    echo ($full_str);
+                    ob_flush();
+                    flush();
                 }
                 ?>
                 <div class="page-select">
@@ -162,7 +179,7 @@ $get_flower_colour = isset($_GET['flower_colour']) ? $_GET['growth_form'] : "";
             </div>
         </div>
     </div>
-    <?php include("theme_swapper.php"); ?>
+    <?php include_once("theme_swapper.php"); ?>
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/app.js"></script>
 </body>

@@ -1,7 +1,7 @@
 
 <?php
 include_once('db_utils.php');
-include('templates.php');
+include_once('templates.php');
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -112,16 +112,15 @@ function get_images($plant_name, $limit = 1)
 {
     $regex = "/([0-9a-z]+)\?itok/";
     $plant_name_dir = str_replace(" ", "_", $plant_name);
-    $matching_imgs = glob("img/" . $plant_name . "/*.{jpg,png,gif}", GLOB_BRACE);
+    $matching_imgs = glob("img/" . $plant_name_dir . "/*.{jpg,png}", GLOB_BRACE);
 
     // Check if we have enough images already
     if (count($matching_imgs) >= $limit) {
         return;
     }
 
-
-
     // We don't, so download some more
+    
     if (!is_dir("img/" . $plant_name_dir)) {
         mkdir("img/" . $plant_name_dir);
     }

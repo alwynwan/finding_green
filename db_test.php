@@ -1,5 +1,5 @@
 <?php 
-include("get_data.php");
+include_once("get_data.php");
 load_data();
 
 $conn = connect_to_db();

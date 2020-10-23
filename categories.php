@@ -1,13 +1,13 @@
 <?php
-include('header.php');
-include("get_data.php");
+include_once('header.php');
+include_once("get_data.php");
 include_once('templates.php');
 $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
 ?>
 
 <body class="full-height full-width">
 
-    <?php include('navbar.php') ?>
+    <?php include_once('navbar.php') ?>
     <div class="container">
         <div class="sidebar">
             <h2>Categories</h2>
@@ -111,7 +111,7 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
 
         </div>
     </div>
-    <?php include("theme_swapper.php"); ?>
+    <?php include_once("theme_swapper.php"); ?>
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/app.js"></script>
 </body>
