@@ -13,34 +13,39 @@ function handleSubmit(stage) {
 
     var selected = $(".plant-entry.selected");
 
-    if (selected.length == 0) {
-        alert("Please select some weeds!");
-        return;
+    if (stage != 1 && selected.length == 0) {
+        window.location.href = "discover.php?stage=1";
+    } else {
+        if (selected.length == 0) {
+            alert("Please select some weeds!");
+            return;
+        }
+
+        var ids_match = window.location.href.match(ids_regex);
+        var ids = "";
+
+        var stage_match = window.location.href.match(stage_regex);
+        var stage = 0;
+
+        if (ids_match !== null) {
+            ids = ids_match[1] + ",";
+        }
+
+        if (stage_match !== null) {
+            stage = parseInt(stage_match[1]);
+        }
+
+        if (stage == 0) {
+            return;
+        }
+
+        for (var i = 0; i < selected.length - 1; i++) {
+            ids += `${selected[i].dataset["id"]},`;
+        }
+
+        ids += `${selected[selected.length - 1].dataset["id"]}`;
+
+        window.location.href = `discover.php?stage=${++stage}&ids=${ids}`;
     }
 
-    var ids_match = window.location.href.match(ids_regex);
-    var ids = "";
-
-    var stage_match = window.location.href.match(stage_regex);
-    var stage = 0;
-
-    if (ids_match !== null) {
-        ids = ids_match[1] + ",";
-    }
-
-    if (stage_match !== null) {
-        stage = parseInt(stage_match[1]);
-    }
-
-    if (stage == 0) {
-        return;
-    }
-
-    for (var i = 0; i < selected.length - 1; i++) {
-        ids += `${selected[i].dataset["id"]},`;
-    }
-
-    ids += `${selected[selected.length - 1].dataset["id"]}`;
-
-    window.location.href = `discover.php?stage=${++stage}&ids=${ids}`;
 }
