@@ -2,8 +2,7 @@
 <?php
 ini_set('display_errors', 1); 
 error_reporting(E_ALL ^ E_NOTICE);
-$matching_imgs = glob("img/" . "aerial+yam" . "*");
-print_r($matching_imgs);
+print_r(glob("img/aerial_yam/" . "*.{jpg,png,gif}",GLOB_BRACE));
 // function cmp_name($a, $b) {
 //     return strcmp(strtolower($a["Name"]), strtolower($b["Name"]));
 // }

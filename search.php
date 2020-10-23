@@ -138,47 +138,20 @@ $get_flower_colour = isset($_GET['flower_colour']) ? $_GET['growth_form'] : "";
 
             <div class="results">
                 <?php
-                $regex = "/([0-9a-z]+)\?itok/";
-
                 $page_data = get_items(10 * ($cur_page - 1), 10, $sql);
 
                 foreach ($page_data as $entry => $value) {
-                    $img_url = null;
-                    $plant_name = str_replace("&#039;", "", str_replace(" ", "_", strtolower($value["1"])));
-                    $matching_imgs = glob("img/" . $plant_name . "/*");
-
-                    // See if we have 5 images already downloaded
-                    if (count($matching_imgs) < 5) {
-                        if (!is_dir("img/" . $plant_name)) {
-                            mkdir("img/" . $plant_name);
-                        }
-                        $img_data = file_get_contents("https://www.googleapis.com/customsearch/v1?q=" . urlencode($plant_name) . "&num=10&cx=d12d8f6715d83526f&key=AIzaSyDN-yuivb0I1o1bRgjxKP-vfuW9Z6vAMYQ&searchType=image");
-                        $img_data = json_decode($img_data, true);
-
-                        $img_count = 0;
-
-                        for ($idx = 0; $img_count < 5; $idx++) {
-                            $matches = null;
-                            $url = $img_data["items"][$idx]['link'];
-                            $path_info = pathinfo($url);
-                            preg_match($regex, $path_info["extension"], $matches);
-                            if (count($matches) == 0) {
-                                continue;
-                            }
-
-                            file_put_contents("img/" . $plant_name . "/" . ($img_count + 1) . "." . $matches[1], file_get_contents($url));
-                            $img_count++;
-                        }
-                    }
-
-                    $imgs = glob("img/" . $plant_name . "/*");
+                    $plant_name = str_replace("&#039;", "", $value["1"]);
+                    get_images($plant_name);
+                    $plant_name = str_replace(" ", "_", $plant_name);
+                    $imgs = glob("img/" . $plant_name . "/*.{jpg,png,gif}",GLOB_BRACE);
 
                     $id_str = str_replace("{{weedid}}", intval($value[0]), $result_template);
                     $name_str = str_replace("{{weedname}}", ucwords($value[1]), $id_str);
                     $species_name_str = str_replace("{{weeddesc}}", ucwords($value[6]), $name_str);
                     $img_str = str_replace("{{weedimg}}", $imgs[0], $species_name_str);
                     $common_names_str = str_replace("{{common_names}}", ucwords($value[5]), $img_str);
-                    $full_str = str_replace("{{control_methods}}", $value[15] == "" ? "N/A" : ucfirst($value[15]),$common_names_str);
+                    $full_str = str_replace("{{control_methods}}", $value[15] == " " ? "N/A" : ucfirst($value[15]),$common_names_str);
 
                     echo($full_str);
                 }

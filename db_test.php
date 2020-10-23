@@ -2,32 +2,35 @@
 include("get_data.php");
 load_data();
 
-function str_cleanup($str) {
-    $str = strtolower($str);
-    $str = str_replace("&#039;", "", $str);
-    return $str;
+$conn = connect_to_db();
+
+if($conn == null) {
+    die("db connect failed");
 }
 
-$mysqli = new mysqli("localhost","fg_user","findinggreen","deco7180");
-
-if ($mysqli -> connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-    exit();
-    }
-
-    foreach ($data as $entry => $value) {
-        $state_declaration = is_array($value["State declaration"]) && $value["State declaration"][0] === "" ? "" : $value["State declaration"];
-        $replacement_species = is_array($value["Replacement species"]) && $value["Replacement species"][0] === "" ? "" : $value["Replacement species"];
-        $sql = "INSERT INTO weeds VALUES (" . $value["Nid"] . ", '" . str_cleanup($value["Name"]) . "', '" . $value["Family"] . "', '" . $value["Deciduous"] . "', '" . $value["Notifiable"] . "', '" . str_cleanup(implode(", ", $value["Common names"])) . "', '" . $value["Species name"] . "', '" . $value["Growth form"] . "', '" . implode("', '", $value["Flower colour"]) . "', '" . $value["Leaf arrangement"] . "', '" . $value["Simple/Compound"] . "', '" . implode(", ", $value["Foliage Colour"]) . "', '" . $value["Flowering time"] . "', '" . $state_declaration . "', '" . $value["Council declaration"] . "', '" . $value["Control methods"] . "', '" . $value["Native/Exotic"] . "', '" . str_cleanup($replacement_species) . "')";
-
-        echo(nl2br("Running SQL query: " . $sql . "\r\n"));
-        if($mysqli->query($sql) === TRUE) {
-            echo("Success");
+function fix_control_methods($str) {
+    $str_split = explode(" ", $str);
+    $actual_string = $str_split[0] . " ";
+    for($idx = 1; $idx < count($str_split); $idx++) {
+        if($str_split[$idx] != $str_split[0]) {
+            $actual_string = $actual_string . $str_split[$idx] . " ";
         }
         else {
-            echo($mysqli->error);
+            break;
         }
     }
 
-    $mysqli->close();
-?>
+    return $actual_string;
+}
+
+$data = get_data("SELECT * FROM weeds");
+
+foreach ($data as $entry => $value) {
+    $actual_string = fix_control_methods($value[15]);
+
+    $sql = "UPDATE `weeds` SET `Control_methods` = '" . $actual_string . "' WHERE `Nid` = " . $value[0];
+    $conn->query($sql);
+}
+
+disconnect_from_db($conn);
+

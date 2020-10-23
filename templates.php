@@ -8,7 +8,7 @@ $result_template = <<<abcdedf
         <div class="col result_center full-height justify-flex-start">
             <h2 class="weed_name">{{weedname}}</h2>
             <span class="weed_desc">{{weeddesc}}</span>
-            <span class="common_names">Commonly known as: {{common_names}}</span>
+            <span class="common_names"><span class="bold">Commonly known as:</span> {{common_names}}</span>
         </div>
         <div class="col full-height result_right">
             <span class="bold">Control methods:</span>

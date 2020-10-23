@@ -733,7 +733,13 @@ body {
     font-size: 1.2em;
 }
 
-.cell_content {}
+.invalid-plant-msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+    text-align: center;
+}
 
 
 /* Tablet overrides */
