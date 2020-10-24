@@ -2,6 +2,7 @@
 include_once('header.php');
 include_once("get_data.php");
 include_once('templates.php');
+$category = isset($_GET['category']) ? $_GET['category'] : "";
 $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
 ?>
 
@@ -13,13 +14,13 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
             <h2>Categories</h2>
             <div class="categories">
                 <ul>
-                    <li onclick="change_category('Aquatic')">Aquatic</li>
-                    <li onclick="change_category('Grass')">Grass</li>
-                    <li onclick="change_category('Herb')">Herb</li>
-                    <li onclick="change_category('Shrub')">Shrub</li>
-                    <li onclick="change_category('Succulent')">Succulent</li>
-                    <li onclick="change_category('Tree')">Tree</li>
-                    <li onclick="change_category('Vine')">Vine</li>
+                    <li <?php echo ($category == 'Aquatic' ? 'class="active"' : ''); ?> onclick="change_category('Aquatic')">Aquatic</li>
+                    <li <?php echo ($category == 'Grass' ? 'class="active"' : ''); ?> onclick="change_category('Grass')">Grass</li>
+                    <li <?php echo ($category == 'Herb' ? 'class="active"' : ''); ?> onclick="change_category('Herb')">Herb</li>
+                    <li <?php echo ($category == 'Shrub' ? 'class="active"' : ''); ?> onclick="change_category('Shrub')">Shrub</li>
+                    <li <?php echo ($category == 'Succulent' ? 'class="active"' : ''); ?> onclick="change_category('Succulent')">Succulent</li>
+                    <li <?php echo ($category == 'Tree' ? 'class="active"' : ''); ?> onclick="change_category('Tree')">Tree</li>
+                    <li <?php echo ($category == 'Vine' ? 'class="active"' : ''); ?> onclick="change_category('Vine')">Vine</li>
                 </ul>
             </div>
         </div>
@@ -33,13 +34,13 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
 
                 <div class="categories sidebar-hidden">
                     <ul>
-                    <li onclick="change_category('Aquatic')">Aquatic</li>
-                    <li onclick="change_category('Grass')">Grass</li>
-                    <li onclick="change_category('Herb')">Herb</li>
-                    <li onclick="change_category('Shrub')">Shrub</li>
-                    <li onclick="change_category('Succulent')">Succulent</li>
-                    <li onclick="change_category('Tree')">Tree</li>
-                    <li onclick="change_category('Vine')">Vine</li>
+                        <li <?php echo ($category == 'Aquatic' ? 'class="active"' : ''); ?> onclick="change_category('Aquatic')">Aquatic</li>
+                        <li <?php echo ($category == 'Grass' ? 'class="active"' : ''); ?> onclick="change_category('Grass')">Grass</li>
+                        <li <?php echo ($category == 'Herb' ? 'class="active"' : ''); ?> onclick="change_category('Herb')">Herb</li>
+                        <li <?php echo ($category == 'Shrub' ? 'class="active"' : ''); ?> onclick="change_category('Shrub')">Shrub</li>
+                        <li <?php echo ($category == 'Succulent' ? 'class="active"' : ''); ?> onclick="change_category('Succulent')">Succulent</li>
+                        <li <?php echo ($category == 'Tree' ? 'class="active"' : ''); ?> onclick="change_category('Tree')">Tree</li>
+                        <li <?php echo ($category == 'Vine' ? 'class="active"' : ''); ?> onclick="change_category('Vine')">Vine</li>
                     </ul>
                 </div>
             </div>
@@ -66,40 +67,29 @@ $cur_page = isset($_GET['page']) ? $_GET['page'] : 1;
                 foreach ($page_data as $entry => $value) {
                     $img_url = null;
                     $plant_name = str_replace("&#039;", "", str_replace(" ", "_", strtolower($value["1"])));
-                    $matching_imgs = glob("img/" . $plant_name . "/*");
+                    get_images($plant_name);
+                    $plant_name = str_replace(" ", "_", $plant_name);
+                    $imgs = glob("img/" . $plant_name . "/*.{jpg,png,gif}", GLOB_BRACE);
 
-                    // See if we have 5 images already downloaded
-                    if (count($matching_imgs) < 5) {
-                        if (!is_dir("img/" . $plant_name)) {
-                            mkdir("img/" . $plant_name);
-                        }
-                        $img_data = file_get_contents("https://www.googleapis.com/customsearch/v1?q=" . urlencode($plant_name) . "&num=10&cx=d12d8f6715d83526f&key=AIzaSyDN-yuivb0I1o1bRgjxKP-vfuW9Z6vAMYQ&searchType=image");
-                        $img_data = json_decode($img_data, true);
-
-                        $img_count = 0;
-
-                        for ($idx = 0; $img_count < 5; $idx++) {
-                            $matches = null;
-                            $url = $img_data["items"][$idx]['link'];
-                            $path_info = pathinfo($url);
-                            preg_match($regex, $path_info["extension"], $matches);
-                            if (count($matches) == 0) {
-                                continue;
-                            }
-
-                            file_put_contents("img/" . $plant_name . "/" . ($img_count + 1) . "." . $matches[1], file_get_contents($url));
-                            $img_count++;
-                        }
-                    }
-
-                    $imgs = glob("img/" . $plant_name . "/*");
-
-                    $id_str = str_replace("{{weedid}}", intval($value[0]), $result_template);
-                    $name_str = str_replace("{{weedname}}", ucwords($value[1]), $id_str);
-                    $species_name_str = str_replace("{{weeddesc}}", ucwords($value[6]), $name_str);
-                    $img_str = str_replace("{{weedimg}}", $imgs[0], $species_name_str);
-                    $common_names_str = str_replace("{{common_names}}", ucwords($value[5]), $img_str);
-                    $full_str = str_replace("{{control_methods}}", $value[15] == " " ? "N/A" : ucfirst($value[15]),$common_names_str);
+                    $full_str = str_replace(
+                        array(
+                            "{{weedid}}",
+                            "{{weedname}}",
+                            "{{weeddesc}}",
+                            "{{weedimg}}",
+                            "{{common_names}}",
+                            "{{control_methods}}"
+                        ),
+                        array(
+                            intval($value[0]),
+                            ucwords($value[1]),
+                            ucwords($value[6]),
+                            $imgs[0],
+                            ucwords($value[5]),
+                            $value[15] == " " ? "N/A" : ucfirst($value[15]), $common_names_str
+                        ),
+                        $result_template
+                    );
 
                     echo ($full_str);
                 }

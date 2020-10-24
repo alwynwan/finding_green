@@ -50,7 +50,7 @@ function create_plant_image_row($stage = 1, $max = 5)
 
     $num_plants = count($data);
     for ($idx = 0; $idx < $max; $idx++) {
-        $rand = rand(0, $num_plants);
+        $rand = rand(0, $num_plants - 1);
         $plant = $data[$rand];
         $plant_name = $plant[1];
 

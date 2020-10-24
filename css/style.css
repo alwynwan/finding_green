@@ -441,6 +441,11 @@ body {
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
+.categories ul li.active {
+    color: var(--black);
+    background-color: var(--white);
+}
+
 .categories ul li:hover {
     transform: scale(1.05);
     transition: transform 0.2s ease, background-color 0.2s ease;
