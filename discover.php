@@ -48,9 +48,15 @@ function create_plant_image_row($stage = 1, $max = 5)
 
     disconnect_from_db($conn);
 
+    $selected_plants = [];
+
     $num_plants = count($data);
     for ($idx = 0; $idx < $max; $idx++) {
         $rand = rand(0, $num_plants - 1);
+
+        if(in_array($rand,$selected_plants))
+            continue;
+
         $plant = $data[$rand];
         $plant_name = $plant[1];
 
@@ -58,7 +64,7 @@ function create_plant_image_row($stage = 1, $max = 5)
 
         $plant_name_dir = str_replace(" ", "_", $plant[1]);
 
-        $plant_imgs = glob("img/" . $plant_name_dir . "/*.{jpg,png}", GLOB_BRACE);
+        $plant_imgs = glob("img/" . $plant_name_dir . "/*.{jpg,jpeg,png}", GLOB_BRACE);
 
         $plant_entry = str_replace(
             array(
@@ -72,6 +78,7 @@ function create_plant_image_row($stage = 1, $max = 5)
             $stage == 1 ? $discover_plant_entry_template_stage1 : $discover_plant_entry_template_stage2
         );
 
+        array_push($selected_plants, $rand);
         echo ($plant_entry);
         ob_flush();
         flush();

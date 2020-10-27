@@ -47,12 +47,16 @@ $plant_id = (isset($_GET["id"]) && is_numeric($_GET["id"])) ? $_GET["id"] : "-1"
                         <h1 class="plant-name"><?php echo (ucwords($plant_data[1])); ?></h1>
                         <h2 class="plant-species"><?php echo (ucwords($plant_data[6])); ?></h2>
 
-                        <img class="main-img" src="<?php echo ("img/" . str_replace(" ", "_", $plant_data[1]) . "/1.jpg"); ?>">
+                        <?php 
+                        $plant_name_dir = str_replace(" ", "_", $plant_data[1]);
+                        $plant_imgs = glob("img/" . $plant_name_dir . "/*.{jpg,jpeg,png}", GLOB_BRACE); ?>
+
+                        <img class="main-img" src="<?php echo($plant_imgs[0]); ?>">
                         <div class="sub-imgs">
-                            <img class="sub-img" src="<?php echo ("img/" . str_replace(" ", "_", $plant_data[1]) . "/2.jpg"); ?>">
-                            <img class="sub-img" src="<?php echo ("img/" . str_replace(" ", "_", $plant_data[1]) . "/3.jpg"); ?>">
-                            <img class="sub-img" src="<?php echo ("img/" . str_replace(" ", "_", $plant_data[1]) . "/4.jpg"); ?>">
-                            <img class="sub-img" src="<?php echo ("img/" . str_replace(" ", "_", $plant_data[1]) . "/5.jpg"); ?>">
+                            <img class="sub-img" src="<?php echo($plant_imgs[1]); ?>">
+                            <img class="sub-img" src="<?php echo($plant_imgs[2]); ?>">
+                            <img class="sub-img" src="<?php echo($plant_imgs[3]); ?>">
+                            <img class="sub-img" src="<?php echo($plant_imgs[4]); ?>">
                         </div>
                         <a class="purchase-btn" href="http://www.wallumnurseries.com/place-order/">Purchase</a>
                     </div>
